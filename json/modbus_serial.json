@@ -1,31 +1,91 @@
 {
-  "server": [
-    {
-      "name": "Modbus Default Server",
-      "type": "serial",
-      "method": "rtu",
-      "port": "/dev/ttyUSB0",
-      "baudrate": 19200,
-      "timeout": 35,
-      "devices": [
-        {
-          "unitId": 1,
-          "deviceName": "Temp Sensor",
-          "attributesPollPeriod": 5000,
-          "Limeseries PollPeriod": 5000,
-          "sendDataOnlyOnChange": true,
-          "attributes": [
-            {
-              "byteOrder": "BIG",
-              "tag": "test",
-              "type": "long",
-              "functionCode": 4,
-              "register Count": 1,
-              "address": 4
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+        "server": {
+                "name": "Modbus Default Server",
+                "type": "serial",
+                "method": "rtu",
+                "port": "/dev/ttyUSB0",
+                "baudrate": 9600,
+                "timeout": 5,
+                "devices": [
+		  {
+			"unitId": 2,
+			"deviceName": "green_temperature_Indoor",
+			"timeseriesPollPeriod": 5000,
+			"sendDataOnlyOnChange": false,
+			"timeseries": [
+			{
+				"tag": "temperature",
+				"type": "16uint",
+				"byteOrder": "BIG",
+				"functionCode": 3,
+				"objectsCount": 1,
+				"address": 1
+			},
+			{
+  				"tag": "humidity",
+				"type": "16uint",
+				"byteOrder": "BIG",
+				"functionCode": 3,
+				"objectsCount": 1,
+				"address": 0
+			}
+		    ]
+                 },
+                        {   
+                                "unitId": 2,
+                                "deviceName": "env_liquid",
+                                "timeseriesPollPeriod": 5000,
+                                "sendDataOnlyOnChange": false,
+                                "timeseries": [{
+                                                "tag": "liquid",
+                                                "type": "16uint",
+                                                "byteOrder": "BIG",
+                                                "functionCode": 3,
+                                                "objectsCount": 1,
+                                                "address": 6
+                                        }
+                                ]
+                        },  
+                        {   
+                                "unitId": 1,
+                                "deviceName": "env_warning_light",
+                                "timeseriesPollPeriod": 5000,
+                                "sendDataOnlyOnChange": false,
+                                "timeseries": [{
+                                        "tag": "warning_light",
+                                        "type": "bits",
+                                        "functionCode": 1,
+                                        "objectsCount": 1,
+                                        "address": 21
+                                }],
+                                "rpc": [{
+                                        "tag": "setValue",
+                                        "type": "bits",
+                                        "functionCode": 5,
+                                        "objectsCount": 1,
+                                        "address": 21
+                                }]
+                        },  
+                        {   
+                                "unitId": 1,
+                                "deviceName": "env_water_pump",
+                                "timeseriesPollPeriod": 5000,
+                                "sendDataOnlyOnChange": false,
+                                "timeseries": [{
+                                        "tag": "water_pump",
+                                        "type": "bits",
+                                        "functionCode": 1,
+                                        "objectsCount": 1,
+                                        "address": 22
+                                }],
+                                "rpc": [{
+                                        "tag": "setValue",
+                                        "type": "bits",
+                                        "functionCode": 5,
+                                        "objectsCount": 1,
+                                        "address": 22
+                                }]
+                        }    
+                ]            
+        }                    
+}    
